@@ -60,26 +60,25 @@
         android:layout_marginStart="142dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="142dp"
-        android:text="don_t_have_account"
+        android:text="don't have account?"
         android:textColor="#385CDD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
-    <TextView
-        android:id="@+id/textView3"
+    <Button
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="162dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:minHeight="48dp"
-        android:text="register_now"
+        android:layout_marginTop="12dp"
+        android:background="@null"
+        android:text="Register Now!"
+        android:textAllCaps="false"
         android:textColor="#385CDD"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

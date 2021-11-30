@@ -4,14 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.DhauEmbunAzzahraJmartPK.request.RegisterRequest;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -33,8 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
             String email = etEmail.getText().toString();
             String pass = etPassword.getText().toString();
 
-            Response.ErrorListener respErrorList = resp->{
-                Toast.makeText(RegisterActivity.this, "System error.",Toast.LENGTH_SHORT).show();
+            Response.ErrorListener respErrorList = volleyError->{
+                //Toast.makeText(RegisterActivity.this, "System error.",Toast.LENGTH_SHORT).show();
+                if (volleyError instanceof TimeoutError || volleyError instanceof NoConnectionError) {
+                    Toast.makeText(getApplicationContext(), "No Connection/Communication Error!", Toast.LENGTH_SHORT).show();
+
+                } else if (volleyError instanceof AuthFailureError) {
+                    Toast.makeText(getApplicationContext(), "Authentication/ Auth Error!", Toast.LENGTH_SHORT).show();
+                } else if (volleyError instanceof ServerError) {
+                    Toast.makeText(getApplicationContext(), "Server Error!", Toast.LENGTH_SHORT).show();
+                } else if (volleyError instanceof NetworkError) {
+                    Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
+                } else if (volleyError instanceof ParseError) {
+                    Toast.makeText(getApplicationContext(), "Parse Error!", Toast.LENGTH_SHORT).show();
+                }
             };
 
             Response.Listener<String> respList = response -> {
@@ -42,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject!=null){
                         Toast.makeText(RegisterActivity.this, "success",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
