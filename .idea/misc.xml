@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/jmart-android-studio/app/src/main/res/layout/activity_login.xml" value="0.22" />
-        <entry key="..\:/jmart-android-studio/app/src/main/res/layout/activity_main.xml" value="0.14114583333333333" />
+        <entry key="..\:/jmart-android-studio/app/src/main/res/layout/activity_main.xml" value="0.2296875" />
         <entry key="..\:/jmart-android-studio/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/jmart-android-studio/app/src/main/res/layout/fragment_filter.xml" value="0.1" />
+        <entry key="..\:/jmart-android-studio/app/src/main/res/layout/fragment_product.xml" value="0.1" />
         <entry key="..\:/jmart-android-studio/app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>
     </option>
