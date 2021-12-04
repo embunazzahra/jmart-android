@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jmartandroid"
         android:usesCleartextTraffic="true">
+        <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"-->
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity
             android:name=".LoginActivity"
