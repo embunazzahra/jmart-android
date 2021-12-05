@@ -1,5 +1,6 @@
 package com.DhauEmbunAzzahraJmartPK;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.DhauEmbunAzzahraJmartPK.model.ProductCategory;
 
 
 public class FilterFragment extends Fragment {
@@ -20,6 +25,7 @@ public class FilterFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -38,8 +44,7 @@ public class FilterFragment extends Fragment {
                 Toast.makeText(getActivity(),"add product clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.aboutme:
-                Toast.makeText(getActivity(),"about me clicked", Toast.LENGTH_SHORT).show();
-                break;
+                startActivity(new Intent(getActivity(),AboutMeActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -48,6 +53,12 @@ public class FilterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_filter, container, false);
+        View view = inflater.inflate(R.layout.fragment_filter, container, false);
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.product_category,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        return view;
     }
 }

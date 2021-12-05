@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -50,31 +51,8 @@ public class ProductFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
-        Response.Listener<String> respList = response -> {
-            try {
-                JSONArray jsonArray = new JSONArray(response);
-                items = new ArrayList<>();
-                if(jsonArray!=null){
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        items.add(jsonObject.getString("name"));
-                    }
-                }
-                else {
-                    items.add("no data");
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getActivity(), "not found.",Toast.LENGTH_SHORT).show();
 
-            }
-        };
 
-        Response.ErrorListener respErrorList = volleyError->{
-            Toast.makeText(getActivity(), "data error.",Toast.LENGTH_SHORT).show();
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        queue.add(RequestFactory.getPage("product",0,1,respList,respErrorList));
 
     }
 
@@ -94,8 +72,7 @@ public class ProductFragment extends Fragment {
                 Toast.makeText(getActivity(),"add product clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.aboutme:
-                Toast.makeText(getActivity(),"about me clicked", Toast.LENGTH_SHORT).show();
-                break;
+                startActivity(new Intent(getActivity(),AboutMeActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -106,17 +83,17 @@ public class ProductFragment extends Fragment {
         // Inflate the layout for this fragment
         Response.Listener<String> respList = response -> {
             try {
-//                JSONArray jsonArray = new JSONArray(response);
-//                items = new ArrayList<>();
-//                if(jsonArray!=null){
-//                    for(int i=0;i<jsonArray.length();i++){
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        items.add(jsonObject.getString("name"));
-//                    }
-//                }
-//                else {
-//                    items.add("no data");
-//                }
+                JSONArray jsonArray = new JSONArray(response);
+                items = new ArrayList<>();
+                if(jsonArray!=null){
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        items.add(jsonObject.getString("name"));
+                    }
+                }
+                else {
+                    items.add("no data");
+                }
                 JSONObject jsonObject = new JSONObject(response);
                 items = new ArrayList<>();
                 if(jsonObject!=null){
@@ -138,8 +115,8 @@ public class ProductFragment extends Fragment {
         };
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        queue.add(RequestFactory.getPage("product",0,1,respList,respErrorList));
-        //items.add("coba");
+        queue.add(RequestFactory.getPage("product",0,2,respList,respErrorList));
+        items.add("coba");
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         lv = (ListView) view.findViewById(lvProduct);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,items);

@@ -8,7 +8,8 @@ public class Account extends Serializable{
     public Store store;
 
     public Account(double balance, String email, String name,
-                   String password, Store store){
+                   String password, Store store, int id){
+        this.id = id;
         this.balance = balance;
         this.email = email;
         this.name = name;
@@ -16,4 +17,8 @@ public class Account extends Serializable{
         this.store = store;
     }
 
+    @Override
+    public String toString() {
+        return ""+balance;
+    }
 }
