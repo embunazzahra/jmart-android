@@ -15,7 +15,10 @@
         android:theme="@style/Theme.Jmartandroid"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".RegisterStore"
+            android:name=".CreateProductActivity"
+            android:exported="true" />
+        <activity
+            android:name=".StoreRegistActivity"
             android:exported="true" />
         <activity
             android:name=".AboutMeActivity"

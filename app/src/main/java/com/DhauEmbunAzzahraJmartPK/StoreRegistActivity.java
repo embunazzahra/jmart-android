@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,13 +12,14 @@ import com.DhauEmbunAzzahraJmartPK.model.Account;
 import com.DhauEmbunAzzahraJmartPK.request.StoreRequest;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterStore extends AppCompatActivity {
+public class StoreRegistActivity extends AppCompatActivity {
+
     EditText storeName;
     EditText storeAddress;
     EditText phoneNumber;
@@ -52,18 +52,18 @@ public class RegisterStore extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if(jsonObject!=null){
-                                Toast.makeText(RegisterStore.this, "success",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterStore.this, AboutMeActivity.class);
+                                Toast.makeText(StoreRegistActivity.this, "success",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(StoreRegistActivity.this, AboutMeActivity.class);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(RegisterStore.this, "your registration is failed.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StoreRegistActivity.this, "your registration is failed.",Toast.LENGTH_SHORT).show();
 
                         }
                     };
                     //StringRequest stringRequest = StoreRequest.getStore(id,name,address,phone,respList,errorListener);
                     StoreRequest request = new StoreRequest(id,name,address,phone,respList,errorListener);
-                    RequestQueue queue = Volley.newRequestQueue(RegisterStore.this);
+                    RequestQueue queue = Volley.newRequestQueue(StoreRegistActivity.this);
                     queue.add(request);
                 }
         );

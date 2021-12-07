@@ -17,6 +17,8 @@ public class AboutMeActivity extends AppCompatActivity {
     Button btnTopUp;
     Button btnStoreReg;
     TextView tvCheckStore;
+    TextView tvStore, tvSname, tvSaddress, tvSnumber;
+    TextView storeName, storeAddress, storeNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +32,35 @@ public class AboutMeActivity extends AppCompatActivity {
         btnTopUp = findViewById(R.id.button5);
         btnStoreReg = findViewById(R.id.registBtn);
         tvCheckStore = findViewById(R.id.storeCheck);
+        tvStore = findViewById(R.id.tvRegStore);
+        tvSname = findViewById(R.id.textView11);
+        tvSaddress = findViewById(R.id.textView12);
+        tvSnumber = findViewById(R.id.textView13);
+        storeName = findViewById(R.id.namaToko);
+        storeAddress = findViewById(R.id.txName3);
+        storeNumber = findViewById(R.id.txName4);
 
 
         name.setText(account.name);
         email.setText(account.email);
         balance.setText(account.toString());
 
-        btnStoreReg.setOnClickListener(e->{startActivity(new Intent(this,RegisterStore.class));});
+        btnStoreReg.setOnClickListener(e->{startActivity(new Intent(this, StoreRegistActivity.class));});
 
         if(account.store!=null){
             tvCheckStore.setVisibility(View.GONE);
             btnStoreReg.setVisibility(View.GONE);
+            storeName.setText(account.store.name);
+            storeAddress.setText(account.store.address);
+            storeNumber.setText(account.store.phoneNumber);
+        }else {
+            tvStore.setVisibility(View.GONE);
+            tvSname.setVisibility(View.GONE);
+            tvSaddress.setVisibility(View.GONE);
+            tvSnumber.setVisibility(View.GONE);
+            storeName.setVisibility(View.GONE);
+            storeAddress.setVisibility(View.GONE);
+            storeNumber.setVisibility(View.GONE);
         }
 
     }

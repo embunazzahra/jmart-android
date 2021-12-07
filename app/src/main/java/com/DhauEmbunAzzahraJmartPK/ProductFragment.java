@@ -69,10 +69,11 @@ public class ProductFragment extends Fragment {
                 Toast.makeText(getActivity(),"search clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.addProduct:
-                Toast.makeText(getActivity(),"add product clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(),CreateProductActivity.class));
                 break;
             case R.id.aboutme:
                 startActivity(new Intent(getActivity(),AboutMeActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
