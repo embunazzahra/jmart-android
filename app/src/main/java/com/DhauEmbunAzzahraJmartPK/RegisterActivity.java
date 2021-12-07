@@ -41,10 +41,9 @@ public class RegisterActivity extends AppCompatActivity {
             String pass = etPassword.getText().toString();
 
             Response.ErrorListener respErrorList = volleyError->{
-                //Toast.makeText(RegisterActivity.this, "System error.",Toast.LENGTH_SHORT).show();
+
                 if (volleyError instanceof TimeoutError || volleyError instanceof NoConnectionError) {
                     Toast.makeText(getApplicationContext(), "No Connection/Communication Error!", Toast.LENGTH_SHORT).show();
-
                 } else if (volleyError instanceof AuthFailureError) {
                     Toast.makeText(getApplicationContext(), "Authentication/ Auth Error!", Toast.LENGTH_SHORT).show();
                 } else if (volleyError instanceof ServerError) {
@@ -53,6 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
                 } else if (volleyError instanceof ParseError) {
                     Toast.makeText(getApplicationContext(), "Parse Error!", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "System error.",Toast.LENGTH_SHORT).show();
                 }
             };
 

@@ -16,13 +16,7 @@ import java.util.Map;
 public class StoreRequest extends StringRequest{
     private static final String URL = "http://10.0.2.2:8080/account/%d/registerStore";
     private final Map<String ,String> params;
-//    public static StringRequest getStore(int id, String name, String address, String phoneNumber, Response.Listener<String> listener,
-//                        Response.ErrorListener errorListener)
-//    {
-//        @SuppressLint("DefaultLocale") String url = String.format(URL, id, name, address, phoneNumber);
-//        return new StringRequest(Request.Method.POST, url, listener, errorListener);
-//
-//    }
+
     public StoreRequest(int id, String name, String address, String phoneNumber, Response.Listener<String> listener,
                         Response.ErrorListener errorListener)
     {

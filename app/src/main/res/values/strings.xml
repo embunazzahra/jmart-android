@@ -28,4 +28,12 @@
         <item>TRAVEL</item>
         <item>WEDDING</item>
     </string-array>
+    
+    <string-array name="shipment_plan">
+        <item>INSTANT</item>
+        <item>SAME DAY</item>
+        <item>NEXT DAY</item>
+        <item>REGULER</item>
+        <item>KARGO</item>
+    </string-array>
 </resources>
