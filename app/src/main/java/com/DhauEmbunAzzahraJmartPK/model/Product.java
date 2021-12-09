@@ -23,6 +23,6 @@ public class Product extends Serializable{
 
     @Override
     public String toString(){
-        return "name: "+this.name+"\nweight: "+this.weight+"\nconditionUsed: "+this.conditionUsed+"\ncategory: "+this.category;
+        return this.name+"\n"+this.price;
     }
 }
