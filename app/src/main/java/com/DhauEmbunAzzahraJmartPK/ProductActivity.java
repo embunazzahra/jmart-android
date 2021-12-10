@@ -2,18 +2,29 @@ package com.DhauEmbunAzzahraJmartPK;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.DhauEmbunAzzahraJmartPK.model.Account;
 import com.DhauEmbunAzzahraJmartPK.model.Product;
 import com.DhauEmbunAzzahraJmartPK.request.RequestFactory;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,13 +45,28 @@ import java.util.HashMap;
 public class ProductActivity extends AppCompatActivity {
 
     private static final Gson gson = new Gson();
-    public static ArrayList<Product> productsList = new ArrayList<>();
+    private static ArrayList<Product> productsList = new ArrayList<>();
+    ListView listProd;
+    private static Product selectedProduct = null;
+    public static Product getProductDetail(){
+        return selectedProduct;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        listProd = findViewById(R.id.listview);
 
+        listProd.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedProduct = productsList.get(i);
+                Intent intent = new Intent(ProductActivity.this,ProductDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final int pageSize = 10;
         int page = 0;
@@ -58,7 +84,6 @@ public class ProductActivity extends AppCompatActivity {
                                 android.R.layout.simple_list_item_1,
                                 productsList
                         );
-                        ListView listProd = findViewById(R.id.listview);
 
                         listProd.setAdapter(listViewAdapter);
                     }
@@ -68,80 +93,25 @@ public class ProductActivity extends AppCompatActivity {
 
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
-        requestQueue.add(RequestFactory.getPage("product", page, pageSize, listener, null));
+        Response.ErrorListener respErrorList = volleyError->{
 
-//        GetData getData = new GetData();
-//        getData.execute();
+            if (volleyError instanceof TimeoutError || volleyError instanceof NoConnectionError) {
+                Toast.makeText(getApplicationContext(), "No Connection/Communication Error!", Toast.LENGTH_SHORT).show();
+            } else if (volleyError instanceof AuthFailureError) {
+                Toast.makeText(getApplicationContext(), "Authentication/ Auth Error!", Toast.LENGTH_SHORT).show();
+            } else if (volleyError instanceof ServerError) {
+                Toast.makeText(getApplicationContext(), "Server Error!", Toast.LENGTH_SHORT).show();
+            } else if (volleyError instanceof NetworkError) {
+                Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
+            } else if (volleyError instanceof ParseError) {
+                Toast.makeText(getApplicationContext(), "Parse Error!", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(), "System error.",Toast.LENGTH_SHORT).show();
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
+        requestQueue.add(RequestFactory.getPage("product", page, pageSize, listener, respErrorList));
 
 
     }
-
-//    public class GetData extends AsyncTask<String,String,String>{
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            String current = "";
-//            try{
-//                URL url;
-//                HttpURLConnection urlConnection = null;
-//                try{
-//                    url = new URL(JSON_URL);
-//                    urlConnection = (HttpURLConnection) url.openConnection();
-//
-//                    InputStream in = urlConnection.getInputStream();
-//                    InputStreamReader isr = new InputStreamReader(in);
-//                    int data = isr.read();
-//
-//                    while(data!=-1){
-//                        current+=(char) data;
-//                        data = isr.read();
-//                    }
-//                    return current;
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }finally {
-//                    if(urlConnection!=null){
-//                        urlConnection.disconnect();
-//                    }
-//                }
-//
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//            return current;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            try {
-//                JSONArray jsonArray = new JSONArray(s);
-//                for(int i=0;i<jsonArray.length();i++){
-//                    JSONObject object = jsonArray.getJSONObject(i);
-//                    namey = object.getString("name");
-//                    price = String.valueOf(object.getDouble("price"));
-//
-//                    HashMap<String,String> product = new HashMap<>();
-//                    product.put("name", namey);
-//                    product.put("price", price);
-//
-//                    productList.add(product);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            ListAdapter adapter = new SimpleAdapter(
-//                    ProductActivity.this,
-//                    productList,
-//                    R.layout.row_layout,
-//                    new String[]{"name", "price"},
-//                    new int[]{R.id.tvNameP, R.id.tvPriceP}
-//            );
-//
-//            lv.setAdapter(adapter);
-//        }
-//    }
 }
