@@ -20,9 +20,9 @@ public class FragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1 :
-                return new ProductFragment();
+                return new FilterFragment();
         }
-        return new FilterFragment();
+        return new ProductFragment();
     }
 
     @Override

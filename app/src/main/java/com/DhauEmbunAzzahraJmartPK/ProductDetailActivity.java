@@ -16,7 +16,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
 
         name = findViewById(R.id.textView9);
-        Product product = ProductActivity.getProductDetail();
-        name.setText(product.name);
+        Product product = ProductFragment.getProductDetail();
+        if(product!=null){
+            name.setText(product.name);
+        }
+
     }
 }

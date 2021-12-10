@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FragmentAdapter(fm,getLifecycle());
         pager2.setAdapter(adapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Filter"));
         tabLayout.addTab(tabLayout.newTab().setText("Products"));
+        tabLayout.addTab(tabLayout.newTab().setText("Filter"));
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

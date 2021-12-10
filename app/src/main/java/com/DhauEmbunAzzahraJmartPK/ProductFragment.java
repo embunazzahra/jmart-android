@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -46,7 +47,12 @@ import java.util.List;
 public class ProductFragment extends Fragment {
 
     private static final Gson gson = new Gson();
-    public static ArrayList<Product> productsList = new ArrayList<>();
+    private static ArrayList<Product> productsList = new ArrayList<>();
+    ListView listProd;
+    private static Product selectedProduct = null;
+    public static Product getProductDetail(){
+        return selectedProduct;
+    }
 
 
     @Override
@@ -80,14 +86,23 @@ public class ProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View productView = inflater.inflate(R.layout.fragment_product, container, false);
+        listProd = (ListView) productView.findViewById(R.id.lvProduct);
+        listProd.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedProduct = productsList.get(i);
+                Intent intent = new Intent(getActivity(),ProductDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
         final int pageSize = 10;
         int page = 0;
-        View productView = inflater.inflate(R.layout.fragment_product, container, false);
+
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -96,13 +111,12 @@ public class ProductFragment extends Fragment {
                     if (object != null) {
                         productsList = gson.fromJson(object.toString(), new TypeToken<ArrayList<Product>>() {
                         }.getType());
-                        System.out.println(productsList);
                         ArrayAdapter<Product> listViewAdapter = new ArrayAdapter<Product>(
                                 getActivity(),
                                 android.R.layout.simple_list_item_1,
                                 productsList
                         );
-                        ListView listProd = (ListView) productView.findViewById(R.id.lvProduct);
+
 
                         listProd.setAdapter(listViewAdapter);
                     }
