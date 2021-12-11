@@ -13,6 +13,7 @@ public class RequestFactory
     private static final String URL_FORMAT_ID = "http://10.0.2.2:8080/%s/%d";
     private static final String URL_FORMAT_PAGE = "http://10.0.2.2:8080/%s/page?page=%s&pageSize=%s";
     private static final String URL_PRODUCT_FILTERED = "http://10.0.2.2:8080/product/getFiltered?page=%s&pageSize=%s&accountId=%s&search=%s&minPrice=%s&maxPrice=%s&category=%s";
+
     public static StringRequest getById
             (
                     String parentURI,
@@ -53,4 +54,5 @@ public class RequestFactory
         String url = String.format(URL_PRODUCT_FILTERED,page,pageSize,accountId,search,minPrice,maxPrice,category);
         return new StringRequest(Request.Method.GET, url, listener, errorListener);
     }
+
 }
