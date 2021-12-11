@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.DhauEmbunAzzahraJmartPK.model.Account;
 import com.DhauEmbunAzzahraJmartPK.model.ProductCategory;
 import com.android.volley.Response;
 
@@ -50,6 +51,10 @@ public class FilterFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu,inflater);
+        Account account = LoginActivity.getLoggedAccount();
+        if(account.store==null)
+            menu.findItem(R.id.addProduct).setVisible(false);
+        else menu.findItem(R.id.addProduct).setVisible(true);
     }
 
     @Override
@@ -144,8 +149,6 @@ public class FilterFragment extends Fragment {
                 intent.putExtra("condition",condition);
                 intent.putExtra("category", category);
                 startActivity(intent);
-                String ex = name + "low: "+lowestPrice+"\nhigh: "+highestPrice+" "+Boolean.toString(condition)+" "+category;
-                Toast.makeText(getActivity(),ex,Toast.LENGTH_SHORT).show();
 
             }
         });

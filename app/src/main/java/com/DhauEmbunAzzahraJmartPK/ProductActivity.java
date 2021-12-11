@@ -50,10 +50,6 @@ public class ProductActivity extends AppCompatActivity {
     private static final Gson gson = new Gson();
     private static ArrayList<Product> productsList = new ArrayList<>();
     ListView listProd;
-    private static Product selectedProduct = null;
-    public static Product getProductDetail(){
-        return selectedProduct;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +69,7 @@ public class ProductActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedProduct = productsList.get(i);
+                ProductFragment.selectedProduct = productsList.get(i);
                 Intent intent = new Intent(ProductActivity.this,ProductDetailActivity.class);
                 startActivity(intent);
             }

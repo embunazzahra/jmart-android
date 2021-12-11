@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.DhauEmbunAzzahraJmartPK.model.Account;
 import com.DhauEmbunAzzahraJmartPK.model.Product;
 import com.DhauEmbunAzzahraJmartPK.request.RegisterRequest;
 import com.DhauEmbunAzzahraJmartPK.request.RequestFactory;
@@ -49,7 +50,7 @@ public class ProductFragment extends Fragment {
     private static final Gson gson = new Gson();
     private static ArrayList<Product> productsList = new ArrayList<>();
     ListView listProd;
-    private static Product selectedProduct = null;
+    public static Product selectedProduct = null;
     public static Product getProductDetail(){
         return selectedProduct;
     }
@@ -65,13 +66,17 @@ public class ProductFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        Account account = LoginActivity.getLoggedAccount();
+        if(account.store==null)
+            menu.findItem(R.id.addProduct).setVisible(false);
+        else menu.findItem(R.id.addProduct).setVisible(true);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
-                startActivity(new Intent(getActivity(),ProductActivity.class));
+                startActivity(new Intent(getActivity(),CheckoutActivity.class));
                 break;
             case R.id.addProduct:
                 startActivity(new Intent(getActivity(), CreateProductActivity.class));

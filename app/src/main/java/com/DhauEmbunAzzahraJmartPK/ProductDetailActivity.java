@@ -2,7 +2,10 @@ package com.DhauEmbunAzzahraJmartPK;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import org.json.JSONObject;
 
 public class ProductDetailActivity extends AppCompatActivity {
     private TextView name,price,discount,condition,category,weight,shipment,store;
+    Button buyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         weight = findViewById(R.id.productWeightDetail);
         shipment = findViewById(R.id.productShipmentDetail);
         store = findViewById(R.id.productStoreDetail);
+        buyButton = findViewById(R.id.prodBuy);
+
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProductDetailActivity.this,CheckoutActivity.class));
+            }
+        });
 
         name.setText(product.name);
         price.setText(String.valueOf(product.price));

@@ -52,7 +52,7 @@ public class StoreRegistActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if(jsonObject!=null){
-                                Toast.makeText(StoreRegistActivity.this, "success",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(StoreRegistActivity.this, "success\nplease, re-login",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(StoreRegistActivity.this, AboutMeActivity.class);
                                 startActivity(intent);
                             }
