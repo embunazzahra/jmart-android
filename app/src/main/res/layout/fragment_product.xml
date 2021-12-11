@@ -77,7 +77,7 @@
     <ListView
         android:id="@+id/lvProduct"
         android:layout_width="378dp"
-        android:layout_height="663dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="595dp"
         app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toEndOf="parent"

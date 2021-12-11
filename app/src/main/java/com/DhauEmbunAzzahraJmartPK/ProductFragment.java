@@ -100,7 +100,7 @@ public class ProductFragment extends Fragment {
 
 
 
-        final int pageSize = 10;
+        final int pageSize = 20;
         int page = 0;
 
         Response.Listener<String> listener = new Response.Listener<String>() {

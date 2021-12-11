@@ -1,5 +1,7 @@
 package com.DhauEmbunAzzahraJmartPK;
 
+import static com.DhauEmbunAzzahraJmartPK.model.ProductCategory.FNB;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.DhauEmbunAzzahraJmartPK.model.Account;
 import com.DhauEmbunAzzahraJmartPK.model.Product;
+import com.DhauEmbunAzzahraJmartPK.model.ProductCategory;
 import com.DhauEmbunAzzahraJmartPK.request.RequestFactory;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -55,6 +58,14 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        double lowestPrice = intent.getDoubleExtra("lowestPrice",0.0);
+        double highestPrice = intent.getDoubleExtra("highestPrice", 0.0);
+        ProductCategory category = (ProductCategory) intent.getSerializableExtra("category");
+        Boolean condition = intent.getBooleanExtra("condition",false);
+
         setContentView(R.layout.activity_product);
         listProd = findViewById(R.id.listview);
 
@@ -110,7 +121,9 @@ public class ProductActivity extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
-        requestQueue.add(RequestFactory.getPage("product", page, pageSize, listener, respErrorList));
+        requestQueue.add(RequestFactory.getProductFiltered(0,20,-1, name,lowestPrice,
+                highestPrice,category,listener,respErrorList
+                ));
 
 
     }

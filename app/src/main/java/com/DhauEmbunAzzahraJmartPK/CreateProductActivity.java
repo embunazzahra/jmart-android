@@ -108,7 +108,7 @@ public class CreateProductActivity extends AppCompatActivity  {
                 double discount = 0.0;
                 boolean condition;
                 try{
-                    weight = (int) weight;
+                    weight = Integer.parseInt(weight_);
                     price = Double.valueOf(price_);
                     discount = Double.valueOf(discount_);
                     if(weight<0)
