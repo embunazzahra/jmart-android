@@ -23,6 +23,7 @@ public class AboutMeActivity extends AppCompatActivity {
     TextView balance;
     Button btnTopUp;
     Button btnStoreReg;
+    Button accHist, storeHist;
     TextView tvCheckStore;
     TextView tvStore, tvSname, tvSaddress, tvSnumber;
     TextView storeName, storeAddress, storeNumber;
@@ -48,6 +49,16 @@ public class AboutMeActivity extends AppCompatActivity {
         storeAddress = findViewById(R.id.txName3);
         storeNumber = findViewById(R.id.txName4);
         topUpBalance = findViewById(R.id.etTopUp);
+        accHist = findViewById(R.id.accHistory);
+        storeHist = findViewById(R.id.storeHistory);
+
+        accHist.setOnClickListener(e->{
+            startActivity(new Intent(AboutMeActivity.this, AccountHistoryActivity.class));
+        });
+
+        storeHist.setOnClickListener(e->{
+            startActivity(new Intent(AboutMeActivity.this,StoreHistoryActivity.class));
+        });
 
         btnTopUp.setOnClickListener(e->{
             double balance_ = 0.0;
@@ -95,6 +106,7 @@ public class AboutMeActivity extends AppCompatActivity {
             storeName.setVisibility(View.GONE);
             storeAddress.setVisibility(View.GONE);
             storeNumber.setVisibility(View.GONE);
+            storeHist.setVisibility(View.GONE);
         }
 
     }

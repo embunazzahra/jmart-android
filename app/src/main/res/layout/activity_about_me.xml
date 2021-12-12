@@ -262,5 +262,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTopUp" />
 
+    <Button
+        android:id="@+id/accHistory"
+        android:layout_width="115dp"
+        android:layout_height="20dp"
+        android:background="@drawable/custom_button_2"
+        android:text="Account History"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.871"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.097" />
+
+    <Button
+        android:id="@+id/storeHistory"
+        android:layout_width="115dp"
+        android:layout_height="20dp"
+        android:background="@drawable/custom_button_2"
+        android:text="Store History"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintVertical_bias="0.123" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
