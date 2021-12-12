@@ -14,8 +14,11 @@ public class PaymentRequest extends StringRequest {
     private static final String URL_PAYMENT_REQUEST = "http://10.0.2.2:8080/payment/create";
     private static final String URL_PAYMENT_BY_USER = "http://10.0.2.2:8080/payment/byAccount?buyerId=%s";
     private static final String URL_CANCEL_PAYMENT = "http://10.0.2.2:8080/payment/%d/cancel";
+    private static final String URL_ACCEPT_PAYMENT = "http://10.0.2.2:8080/payment/%d/accept";
     private static final String URL_PAYMENT_BY_ID = "http://10.0.2.2:8080/payment/byStore?";
     private static final String PRODUCT_ID = "productId=%d";
+    private static final String URL_SUBMIT_PAYMENT = "http://10.0.2.2:8080/payment/%d/submit?receipt=%s";
+
     private final Map<String ,String> params;
 
     public PaymentRequest(int buyerId, int productId,int productCount,String shipmentAddress,byte shipmentPlan, Response.Listener<String> listener,
@@ -43,6 +46,15 @@ public class PaymentRequest extends StringRequest {
 
     public static StringRequest cancelPayment(int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
         String url = String.format(URL_CANCEL_PAYMENT,id);
+        return new StringRequest(Method.POST, url, listener, errorListener);
+    }
+    public static StringRequest acceptPayment(int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        String url = String.format(URL_ACCEPT_PAYMENT,id);
+        return new StringRequest(Method.POST, url, listener, errorListener);
+    }
+
+    public static StringRequest submitPayment(int id, String receipt, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        String url = String.format(URL_SUBMIT_PAYMENT,id,receipt);
         return new StringRequest(Method.POST, url, listener, errorListener);
     }
 

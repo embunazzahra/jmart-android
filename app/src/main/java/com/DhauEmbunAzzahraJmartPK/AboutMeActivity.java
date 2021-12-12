@@ -75,10 +75,15 @@ public class AboutMeActivity extends AppCompatActivity {
                     productList = gson.fromJson(array.toString(), new TypeToken<ArrayList<Product>>() {
                     }.getType());
                     //fetching data of all payment of the product
-                    for (int i=0;i<productList.size();i++){
-                        productIdList.add(productList.get(i).id);
+                    if(!productList.isEmpty()){
+                        for (int i=0;i<productList.size();i++){
+                            productIdList.add(productList.get(i).id);
+                        }
+                        startActivity(new Intent(AboutMeActivity.this,StoreHistoryActivity.class));
+                    }else{
+                        Toast.makeText(AboutMeActivity.this, "You have no product.",Toast.LENGTH_SHORT).show();
                     }
-                    startActivity(new Intent(AboutMeActivity.this,StoreHistoryActivity.class));
+
                 } catch (JSONException v) {
                     Toast.makeText(AboutMeActivity.this, "find product is failed",Toast.LENGTH_SHORT).show();
                 }

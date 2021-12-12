@@ -54,14 +54,21 @@ public class StoreHistoryActivity extends AppCompatActivity {
             Toast.makeText(StoreHistoryActivity.this, "System error.",Toast.LENGTH_SHORT).show();
         };
 
-
+        //fetch payment list from product id
         Response.Listener<String> respListPayment = response -> {
             try {
                 JSONArray array = new JSONArray(response);
                 paymentList = gson.fromJson(array.toString(), new TypeToken<ArrayList<Payment>>() {
                 }.getType());
-                mainContent.setText(response);
-
+                if(paymentList.size()>0){
+                    for (int i=paymentList.size()-1;i>=0;i--){
+                        status += "\n\nPayment Id: "+String.valueOf(paymentList.get(i).id)+"\nProduct Id: "+String.valueOf(paymentList.get(i).productId)+"\nBuyer Id: "+String.valueOf(paymentList.get(i).buyerId)+"\nShipment Address: "+paymentList.get(i).shipment.address+"\nStatus:";
+                        for(int j = 0; j < paymentList.get(i).history.size();j++){
+                            status+="\n"+paymentList.get(i).history.get(j).status.toString();
+                        }
+                    }
+                }
+                mainContent.setText(status);
             } catch (JSONException e) {
                 Toast.makeText(StoreHistoryActivity.this, "find payments is failed",Toast.LENGTH_SHORT).show();
             }
@@ -70,5 +77,108 @@ public class StoreHistoryActivity extends AppCompatActivity {
         //make the requests
         RequestQueue queue = Volley.newRequestQueue(StoreHistoryActivity.this);
         queue.add(PaymentRequest.getPaymentByProduct(AboutMeActivity.productIdList,respListPayment,errorListener));
+
+        //cancel paymemnt
+        cancelBtn.setOnClickListener(o->{
+            String payId = cancelId.getText().toString();
+            int id =-1; boolean idFound = false;
+            try {
+                id = Integer.parseInt(payId);
+            } catch (NumberFormatException e) {
+                Toast.makeText(StoreHistoryActivity.this, "fail to parse.",Toast.LENGTH_SHORT).show();
+            }
+            for(int i=0;i<paymentList.size();i++){
+                if(paymentList.get(i).id == id){
+                    idFound = true;
+                }
+            }
+            if(!idFound)
+                id = -1;
+
+            Response.Listener<String> listener = response -> {
+                boolean resp = Boolean.parseBoolean(response);
+                if (resp){
+                    Toast.makeText(StoreHistoryActivity.this, "success.",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(StoreHistoryActivity.this, "failed.",Toast.LENGTH_SHORT).show();
+                }
+            };
+
+            Response.ErrorListener errListener = error -> {
+                Toast.makeText(StoreHistoryActivity.this, "Something Error.",Toast.LENGTH_SHORT).show();
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(StoreHistoryActivity.this);
+            requestQueue.add(PaymentRequest.cancelPayment(id, listener, errListener));
+        });
+
+        //Submit feature
+        submitBtn.setOnClickListener(o->{
+            String receipt = submitReceipt.getText().toString();
+            String payId = submitId.getText().toString();
+            int id =-1; boolean idFound = false;
+            try {
+                id = Integer.parseInt(payId);
+            } catch (NumberFormatException e) {
+                Toast.makeText(StoreHistoryActivity.this, "fail to parse.",Toast.LENGTH_SHORT).show();
+            }
+            for(int i=0;i<paymentList.size();i++){
+                if(paymentList.get(i).id == id){
+                    idFound = true;
+                }
+            }
+            if(!idFound)
+                id = -1;
+            Response.Listener<String> listener = response -> {
+                boolean resp = Boolean.parseBoolean(response);
+                if (resp){
+                    Toast.makeText(StoreHistoryActivity.this, "success.",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(StoreHistoryActivity.this, "failed.",Toast.LENGTH_SHORT).show();
+                }
+            };
+
+            Response.ErrorListener errListener = error -> {
+                Toast.makeText(StoreHistoryActivity.this, "Something Error.",Toast.LENGTH_SHORT).show();
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(StoreHistoryActivity.this);
+            requestQueue.add(PaymentRequest.submitPayment(id, receipt,listener, errListener));
+
+        });
+
+        //Accept feature
+        acceptBtn.setOnClickListener(o->{
+            String payId = acceptId.getText().toString();
+            int id =-1; boolean idFound = false;
+            try {
+                id = Integer.parseInt(payId);
+            } catch (NumberFormatException e) {
+                Toast.makeText(StoreHistoryActivity.this, "fail to parse.",Toast.LENGTH_SHORT).show();
+            }
+            for(int i=0;i<paymentList.size();i++){
+                if(paymentList.get(i).id == id){
+                    idFound = true;
+                }
+            }
+            if(!idFound)
+                id = -1;
+
+            Response.Listener<String> listener = response -> {
+                boolean resp = Boolean.parseBoolean(response);
+                if (resp){
+                    Toast.makeText(StoreHistoryActivity.this, "success.",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(StoreHistoryActivity.this, "failed.",Toast.LENGTH_SHORT).show();
+                }
+            };
+
+            Response.ErrorListener errListener = error -> {
+                Toast.makeText(StoreHistoryActivity.this, "Something Error.",Toast.LENGTH_SHORT).show();
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(StoreHistoryActivity.this);
+            requestQueue.add(PaymentRequest.acceptPayment(id, listener, errListener));
+        });
+
     }
 }

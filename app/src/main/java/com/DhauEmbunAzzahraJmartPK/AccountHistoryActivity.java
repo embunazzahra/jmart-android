@@ -89,6 +89,8 @@ public class AccountHistoryActivity extends AppCompatActivity {
                             status+="\n"+paymentList.get(i).history.get(j).status.toString();
                         }
                     }
+                }else{
+                    status = "You have no order history.";
                 }
                 lastHistory.setText(status);
             } catch (JSONException e) {
