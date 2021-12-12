@@ -82,7 +82,6 @@ public class AccountHistoryActivity extends AppCompatActivity {
                 JSONArray array = new JSONArray(response);
                 paymentList = gson.fromJson(array.toString(), new TypeToken<ArrayList<Payment>>() {
                 }.getType());
-//                status = array.getJSONObject(0).getJSONArray("history").getJSONObject(0).getString("status");
                 if(paymentList.size()>0){
                     for (int i=paymentList.size()-1;i>=0;i--){
                         status += "\n\nPayment Id: "+String.valueOf(paymentList.get(i).id)+"\nProduct Id: "+String.valueOf(paymentList.get(i).productId)+"\nStatus:";

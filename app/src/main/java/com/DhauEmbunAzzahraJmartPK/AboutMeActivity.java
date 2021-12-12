@@ -11,11 +11,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.DhauEmbunAzzahraJmartPK.model.Account;
+import com.DhauEmbunAzzahraJmartPK.model.Product;
 import com.DhauEmbunAzzahraJmartPK.request.RequestFactory;
 import com.DhauEmbunAzzahraJmartPK.request.TopUpRequest;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 public class AboutMeActivity extends AppCompatActivity {
     TextView name;
@@ -28,6 +36,9 @@ public class AboutMeActivity extends AppCompatActivity {
     TextView tvStore, tvSname, tvSaddress, tvSnumber;
     TextView storeName, storeAddress, storeNumber;
     EditText topUpBalance;
+    private static final Gson gson = new Gson();
+    public static ArrayList<Product> productList = new ArrayList<>();
+    public static ArrayList<Integer> productIdList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +68,32 @@ public class AboutMeActivity extends AppCompatActivity {
         });
 
         storeHist.setOnClickListener(e->{
-            startActivity(new Intent(AboutMeActivity.this,StoreHistoryActivity.class));
+            //fetching data of all product in this store
+            Response.Listener<String> respListProduct = response ->{
+                try {
+                    JSONArray array = new JSONArray(response);
+                    productList = gson.fromJson(array.toString(), new TypeToken<ArrayList<Product>>() {
+                    }.getType());
+                    //fetching data of all payment of the product
+                    for (int i=0;i<productList.size();i++){
+                        productIdList.add(productList.get(i).id);
+                    }
+                    startActivity(new Intent(AboutMeActivity.this,StoreHistoryActivity.class));
+                } catch (JSONException v) {
+                    Toast.makeText(AboutMeActivity.this, "find product is failed",Toast.LENGTH_SHORT).show();
+                }
+            };
+            Response.ErrorListener errorListener = error -> {
+                Toast.makeText(AboutMeActivity.this, "System error.",Toast.LENGTH_SHORT).show();
+            };
+            RequestQueue queue = Volley.newRequestQueue(AboutMeActivity.this);
+            queue.add(RequestFactory.getProductByStore(
+                    account.id,
+                    0,
+                    50,
+                    respListProduct,
+                    errorListener
+            ));
         });
 
         btnTopUp.setOnClickListener(e->{

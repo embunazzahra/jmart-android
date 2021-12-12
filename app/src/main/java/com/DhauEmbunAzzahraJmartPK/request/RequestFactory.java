@@ -13,6 +13,20 @@ public class RequestFactory
     private static final String URL_FORMAT_ID = "http://10.0.2.2:8080/%s/%d";
     private static final String URL_FORMAT_PAGE = "http://10.0.2.2:8080/%s/page?page=%s&pageSize=%s";
     private static final String URL_PRODUCT_FILTERED = "http://10.0.2.2:8080/product/getFiltered?page=%s&pageSize=%s&accountId=%s&search=%s&minPrice=%s&maxPrice=%s&category=%s";
+    private static final String URL_PRODUCT_BY_STORE = "http://10.0.2.2:8080/product/%d/store?page=%s&pageSize=%s";
+
+    public static StringRequest getProductByStore
+            (
+                    int id,
+                    int page,
+                    int pageSize,
+                    Response.Listener<String> listener,
+                    Response.ErrorListener errorListener
+            )
+    {
+        String url = String.format(URL_PRODUCT_BY_STORE,id,page,pageSize);
+        return new StringRequest(Request.Method.GET, url, listener, errorListener);
+    }
 
     public static StringRequest getById
             (
