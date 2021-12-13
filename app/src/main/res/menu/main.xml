@@ -6,7 +6,8 @@
         android:id="@+id/search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/search"/>
+        android:icon="@drawable/search"
+        app:actionViewClass="android.widget.SearchView" />
     <item android:title="Add Product"
         android:id="@+id/addProduct"
         android:orderInCategory="101"

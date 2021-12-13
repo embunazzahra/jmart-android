@@ -23,6 +23,6 @@ public class Product extends Serializable{
 
     @Override
     public String toString(){
-        return "\n"+this.name+"\n"+this.price+"\n";
+        return this.name+"\n\n"+this.price;
     }
 }
