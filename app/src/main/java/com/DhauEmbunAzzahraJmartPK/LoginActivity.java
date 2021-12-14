@@ -24,6 +24,7 @@ import org.json.JSONObject;
 /**
  * This is class for user login activity.
  *
+ * @author Dhau' Embun Azzahra
  */
 public class LoginActivity extends AppCompatActivity {
     private static final Gson gson = new Gson();

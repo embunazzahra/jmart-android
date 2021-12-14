@@ -26,6 +26,8 @@ import org.json.JSONObject;
 
 /**
  * This is class for product detail activity.
+ *
+ * @author Dhau' Embun Azzahra
  */
 public class ProductDetailActivity extends AppCompatActivity {
     private TextView name,price,discount,condition,category,weight,shipment,store;

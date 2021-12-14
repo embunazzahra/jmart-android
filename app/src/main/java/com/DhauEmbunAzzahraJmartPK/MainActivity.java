@@ -39,6 +39,8 @@ import java.util.ArrayList;
  * this activity consists of fragments:
  * Product fragment to show all the product,
  * Filter fragment to filter product.
+ *
+ * @author Dhau' Embun Azzahra
  */
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;

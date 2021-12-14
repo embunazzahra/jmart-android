@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 /**
  * This is class for store registration
+ * @author Dhau' Embun Azzahra.
  */
 public class StoreRegistActivity extends AppCompatActivity {
 
@@ -68,7 +69,7 @@ public class StoreRegistActivity extends AppCompatActivity {
 
                         }
                     };
-                   
+
                     StoreRequest request = new StoreRequest(id,name,address,phone,respList,errorListener);
                     RequestQueue queue = Volley.newRequestQueue(StoreRegistActivity.this);
                     queue.add(request);

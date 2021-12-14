@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -47,12 +49,18 @@ import java.util.HashMap;
 
 /**
  * This is class for showing product after the filter applied.
+ *
+ * @author Dhau' Embun Azzahra
  */
 public class ProductActivity extends AppCompatActivity {
 
     private static final Gson gson = new Gson();
     private static ArrayList<Product> productsList = new ArrayList<>();
     ListView listProd;
+    EditText etPage;
+    Button prevBtn, nextBtn, goBtn;
+    final int pageSize = 10;
+    int page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +75,11 @@ public class ProductActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_product);
         listProd = findViewById(R.id.listview);
+        etPage = findViewById(R.id.pageFiltered);
+        prevBtn = findViewById(R.id.preevButton);
+        nextBtn = findViewById(R.id.neextButton);
+        goBtn = findViewById(R.id.gooBtn);
+
 
         /**
          * If the listview is clicked,
@@ -83,8 +96,6 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
-        final int pageSize = 10;
-        int page = 0;
 
         /**
          * Listener to convert the response to the Product array list
@@ -104,8 +115,11 @@ public class ProductActivity extends AppCompatActivity {
                                 android.R.layout.simple_list_item_1,
                                 productsList
                         );
-
-                        listProd.setAdapter(listViewAdapter);
+                        if(!productsList.isEmpty())
+                            listProd.setAdapter(listViewAdapter);
+                        else
+                            if(page>0)
+                                page--;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -130,10 +144,90 @@ public class ProductActivity extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
-        requestQueue.add(RequestFactory.getProductFiltered(0,20,-1, name,lowestPrice,
+        requestQueue.add(RequestFactory.getProductFiltered(page,pageSize,-1, name,lowestPrice,
                 highestPrice,category,listener,respErrorList
                 ));
 
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                page++;
+                RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
+                requestQueue.add(RequestFactory.getProductFiltered(page,pageSize,-1, name,lowestPrice,
+                        highestPrice,category,listener,respErrorList
+                ));
+            }
+        });
+
+        /**
+         * if the prev button is clicked,
+         * the page will be decrement by one.
+         */
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(page>0){
+                    page--;
+                    RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
+                    requestQueue.add(RequestFactory.getProductFiltered(page,pageSize,-1, name,lowestPrice,
+                            highestPrice,category,listener,respErrorList
+                    ));
+                }
+            }
+        });
+
+        Response.Listener<String> secondListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray object = new JSONArray(response);
+                    if (object != null) {
+                        productsList = gson.fromJson(object.toString(), new TypeToken<ArrayList<Product>>() {
+                        }.getType());
+
+                        ArrayAdapter<Product> listViewAdapter = new ArrayAdapter<Product>(
+                                getApplicationContext(),
+                                android.R.layout.simple_list_item_1,
+                                productsList
+                        );
+                        if(!productsList.isEmpty())
+                            listProd.setAdapter(listViewAdapter);
+                        else{
+                            Toast.makeText(ProductActivity.this, "No data in this page.",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ProductActivity.this,ProductActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        /**
+         * if the go button is clicked,
+         * the page will go to the page
+         * of user input.
+         */
+        goBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    page = Integer.parseInt(etPage.getText().toString());
+                    if(page>=1){
+                        RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);
+                        requestQueue.add(RequestFactory.getProductFiltered(page-1,pageSize,-1, name,lowestPrice,
+                                highestPrice,category,secondListener,respErrorList
+                        ));
+                    }else{
+                        Toast.makeText(ProductActivity.this, "page start with 1.",Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (NumberFormatException e) {
+                    Toast.makeText(ProductActivity.this, "failed to parse.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 }

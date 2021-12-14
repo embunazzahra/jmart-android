@@ -109,7 +109,7 @@ public class CheckoutActivity extends AppCompatActivity {
                             Toast.makeText(CheckoutActivity.this, "success.",Toast.LENGTH_SHORT).show();
                         }else Toast.makeText(CheckoutActivity.this, "failed.",Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
-                        Toast.makeText(CheckoutActivity.this, "JSON exception.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CheckoutActivity.this, "Failed. Check your balance.",Toast.LENGTH_SHORT).show();
                     }
                 };
 

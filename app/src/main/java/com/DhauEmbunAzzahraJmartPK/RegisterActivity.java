@@ -27,6 +27,7 @@ import org.json.JSONObject;
 /**
  * This is class for user register activity.
  *
+ * @author Dhau' Embun Azzahra
  */
 public class RegisterActivity extends AppCompatActivity {
 

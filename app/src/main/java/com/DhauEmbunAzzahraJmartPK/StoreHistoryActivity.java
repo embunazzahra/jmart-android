@@ -27,6 +27,7 @@ import java.util.ArrayList;
 /**
  * This is class for get the store history activity.
  * This will give information about store order history.
+ * @author Dhau' Embun Azzahra
  */
 public class StoreHistoryActivity extends AppCompatActivity {
     EditText cancelId, submitId, submitReceipt, acceptId;

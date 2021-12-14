@@ -187,7 +187,7 @@ public class ProductFragment extends Fragment {
                         else
                             if(page>0)
                                 page--;
-                        Toast.makeText(getActivity(), String.valueOf(page),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "page "+String.valueOf(page+1),Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,8 +211,12 @@ public class ProductFragment extends Fragment {
                             android.R.layout.simple_list_item_1,
                             productsList
                     );
-                    listProd.setAdapter(listViewAdapter);
-                    Toast.makeText(getActivity(), String.valueOf(page),Toast.LENGTH_SHORT).show();
+                    if(!productsList.isEmpty())
+                        listProd.setAdapter(listViewAdapter);
+                    else
+                        Toast.makeText(getActivity(), "No data in this page.",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
+                        startActivity(intent);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -257,8 +261,13 @@ public class ProductFragment extends Fragment {
             public void onClick(View view) {
                 try{
                     page = Integer.parseInt(etPage.getText().toString());
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-                    requestQueue.add(RequestFactory.getPage("product", page, pageSize, secondListener, null));
+                    if(page>=1){
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                        requestQueue.add(RequestFactory.getPage("product", page-1, pageSize, secondListener, null));
+                    }else{
+                        Toast.makeText(getActivity(), "page start with 1.",Toast.LENGTH_SHORT).show();
+                    }
+
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "failed to parse.",Toast.LENGTH_SHORT).show();
                 }
