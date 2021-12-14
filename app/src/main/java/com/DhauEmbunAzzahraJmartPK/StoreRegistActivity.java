@@ -18,6 +18,9 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is class for store registration
+ */
 public class StoreRegistActivity extends AppCompatActivity {
 
     EditText storeName;
@@ -37,6 +40,10 @@ public class StoreRegistActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
         registButton = findViewById(R.id.button9);
 
+        /**
+         * This is the listener for the store registration.
+         * will inform whether the registration is success or not.
+         */
         registButton.setOnClickListener(
                 o->{
                     int id = account.id;
@@ -61,7 +68,7 @@ public class StoreRegistActivity extends AppCompatActivity {
 
                         }
                     };
-                    //StringRequest stringRequest = StoreRequest.getStore(id,name,address,phone,respList,errorListener);
+                   
                     StoreRequest request = new StoreRequest(id,name,address,phone,respList,errorListener);
                     RequestQueue queue = Volley.newRequestQueue(StoreRegistActivity.this);
                     queue.add(request);

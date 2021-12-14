@@ -25,6 +25,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * This is activity for giving information of
+ * the user order history.
+ *
+ * @author Dhau' Embun Azzahra
+ * */
 public class AccountHistoryActivity extends AppCompatActivity {
     private static final Gson gson = new Gson();
     private static ArrayList<Payment> paymentList = new ArrayList<>();
@@ -44,6 +50,9 @@ public class AccountHistoryActivity extends AppCompatActivity {
         cancelBtn = findViewById(R.id.cancelCustBtn);
         etId = findViewById(R.id.paymentIdCancel);
 
+        /**
+         * Cancel payment of the order by buyer.
+         */
         cancelBtn.setOnClickListener(o->{
             String payId = etId.getText().toString();
             int id =-1; boolean idFound = false;

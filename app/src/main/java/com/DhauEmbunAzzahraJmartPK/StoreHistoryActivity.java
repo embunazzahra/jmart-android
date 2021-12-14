@@ -24,14 +24,27 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+/**
+ * This is class for get the store history activity.
+ * This will give information about store order history.
+ */
 public class StoreHistoryActivity extends AppCompatActivity {
     EditText cancelId, submitId, submitReceipt, acceptId;
     Button cancelBtn, submitBtn, acceptBtn;
     TextView mainContent;
 
     private static final Gson gson = new Gson();
+    /**
+     * list of payment history of the store.
+     */
     private static ArrayList<Payment> paymentList = new ArrayList<>();
+    /**
+     * The status of order.
+     */
     private static String status = "";
+    /**
+     * The product id of the order.
+     */
     private static String productId = "";
     Account account = LoginActivity.getLoggedAccount();
 
@@ -54,7 +67,12 @@ public class StoreHistoryActivity extends AppCompatActivity {
             Toast.makeText(StoreHistoryActivity.this, "System error.",Toast.LENGTH_SHORT).show();
         };
 
-        //fetch payment list from product id
+
+        /**
+         * fetch payment list from store product id
+         * ,put them in the paymentList arraylist,
+         * and assign every payment to the status string.
+         */
         Response.Listener<String> respListPayment = response -> {
             try {
                 JSONArray array = new JSONArray(response);
@@ -78,7 +96,9 @@ public class StoreHistoryActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(StoreHistoryActivity.this);
         queue.add(PaymentRequest.getPaymentByProduct(AboutMeActivity.productIdList,respListPayment,errorListener));
 
-        //cancel paymemnt
+        /**
+         * this can make a request to cancel the payment with id.
+         */
         cancelBtn.setOnClickListener(o->{
             String payId = cancelId.getText().toString();
             int id =-1; boolean idFound = false;
@@ -87,11 +107,20 @@ public class StoreHistoryActivity extends AppCompatActivity {
             } catch (NumberFormatException e) {
                 Toast.makeText(StoreHistoryActivity.this, "fail to parse.",Toast.LENGTH_SHORT).show();
             }
+
+            /**
+             * find the id in payment list.
+             */
             for(int i=0;i<paymentList.size();i++){
                 if(paymentList.get(i).id == id){
                     idFound = true;
                 }
             }
+            /**
+             * if the id is not found,
+             * assign the id with -1
+             * so it will get 'false' boolean as response
+             */
             if(!idFound)
                 id = -1;
 
@@ -112,7 +141,10 @@ public class StoreHistoryActivity extends AppCompatActivity {
             requestQueue.add(PaymentRequest.cancelPayment(id, listener, errListener));
         });
 
-        //Submit feature
+        /**
+         * this is use for the store
+         * to submit the receipt of the order.
+         */
         submitBtn.setOnClickListener(o->{
             String receipt = submitReceipt.getText().toString();
             String payId = submitId.getText().toString();
@@ -122,11 +154,20 @@ public class StoreHistoryActivity extends AppCompatActivity {
             } catch (NumberFormatException e) {
                 Toast.makeText(StoreHistoryActivity.this, "fail to parse.",Toast.LENGTH_SHORT).show();
             }
+
+            /**
+             * find the id in payment list.
+             */
             for(int i=0;i<paymentList.size();i++){
                 if(paymentList.get(i).id == id){
                     idFound = true;
                 }
             }
+            /**
+             * if the id is not found,
+             * assign the id with -1
+             * so it will get 'false' boolean as response
+             */
             if(!idFound)
                 id = -1;
             Response.Listener<String> listener = response -> {
@@ -146,7 +187,10 @@ public class StoreHistoryActivity extends AppCompatActivity {
 
         });
 
-        //Accept feature
+        /**
+         * this is use for the store
+         * to accept the order from buyer.
+         */
         acceptBtn.setOnClickListener(o->{
             String payId = acceptId.getText().toString();
             int id =-1; boolean idFound = false;
@@ -155,11 +199,21 @@ public class StoreHistoryActivity extends AppCompatActivity {
             } catch (NumberFormatException e) {
                 Toast.makeText(StoreHistoryActivity.this, "fail to parse.",Toast.LENGTH_SHORT).show();
             }
+
+            /**
+             * find the id in payment list.
+             */
             for(int i=0;i<paymentList.size();i++){
                 if(paymentList.get(i).id == id){
                     idFound = true;
                 }
             }
+
+            /**
+             * if the id is not found,
+             * assign the id with -1
+             * so it will get 'false' boolean as response
+             */
             if(!idFound)
                 id = -1;
 

@@ -21,10 +21,18 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is class for user login activity.
+ *
+ */
 public class LoginActivity extends AppCompatActivity {
     private static final Gson gson = new Gson();
     private static Account loggedAccount = null;
 
+    /**
+     * Method to get the current logged account
+     * @return currently logged account.
+     */
     public static Account getLoggedAccount(){
         return loggedAccount;
     }
@@ -38,12 +46,20 @@ public class LoginActivity extends AppCompatActivity {
         Button loginBtn = findViewById(R.id.button2);
         Button regBtn = findViewById(R.id.button3);
 
+        /**
+         * This will move from the login page
+         * to register account page.
+         */
         regBtn.setOnClickListener(
             e->{
                 startActivity(new Intent(this,RegisterActivity.class));
             }
         );
 
+        /**
+         * This will process the login form
+         * and move to main activity.
+         */
         loginBtn.setOnClickListener( new View.OnClickListener(){
                                          @Override
                                          public void onClick(View view) {
@@ -82,22 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                                      }
         );
 
-
-//        loginBtn.setOnClickListener(o->{
-//            String email = etEmail.getText().toString();
-//            String pass = etPassword.getText().toString();
-//
-//            Response.Listener<String> respList = response ->{
-//                LoginRequest loginRequest = new LoginRequest(email,pass,this,this);
-//                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-//                queue.add(loginRequest);
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-//            };
-//
-//        });
-
     }
-
 
 }

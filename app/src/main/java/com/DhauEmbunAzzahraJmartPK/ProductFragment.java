@@ -45,21 +45,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This is fragment for showing all the product
+ * in the listview.
+ *
+ * @author Dhau' Embun Azzahra
+ * */
 public class ProductFragment extends Fragment {
     final int pageSize = 10;
     int page = 0;
 
     private static final Gson gson = new Gson();
     private static ArrayList<Product> productsList = new ArrayList<>();
+    /**
+     * The listview of the products.
+     */
     ListView listProd;
     EditText etPage;
     Button prevBtn, nextBtn, goBtn;
     public static Product selectedProduct = null;
+
+    /**
+     * This will get the product of the product selected in the listview
+     * by the user.
+     * @return selected product.
+     */
     public static Product getProductDetail(){
         return selectedProduct;
     }
-    ArrayAdapter<Product> listViewAdapter;
+    public static ArrayAdapter<Product> listViewAdapter;
 
 
     @Override
@@ -68,6 +82,15 @@ public class ProductFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * In this onCreateOptionsMenu will check if the logged account
+     * doesn't have store yet, the "add product" menu will be
+     * hiden from the topbar.
+     * If the search icon is clicked, this will do product search
+     * based on the start of the words in product name.
+     * @param menu the menu.
+     * @param inflater the menu inflater.
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
@@ -95,11 +118,16 @@ public class ProductFragment extends Fragment {
         });
     }
 
+    /**
+     * This will move the activity if one of the menu is clicked.
+     * @param item menu item.
+     * @return selected item.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
-                startActivity(new Intent(getActivity(),CheckoutActivity.class));
+                Toast.makeText(getActivity(),"search clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.addProduct:
                 startActivity(new Intent(getActivity(), CreateProductActivity.class));
@@ -121,6 +149,11 @@ public class ProductFragment extends Fragment {
         goBtn = (Button) productView.findViewById(R.id.button6);
         listProd = (ListView) productView.findViewById(R.id.lvProduct);
 
+        /**
+         * If the listview is clicked,
+         * it will move to product detail activity
+         * in ProductDetailActivity.class
+         */
         listProd.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
@@ -131,7 +164,11 @@ public class ProductFragment extends Fragment {
             }
         });
 
-
+        /**
+         * listener for the products listview.
+         * if the listview is empty when using next and previous button,
+         * the page will be decrement by one.
+         */
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -158,6 +195,11 @@ public class ProductFragment extends Fragment {
             }
         };
 
+        /**
+         * listener for the products listview.
+         * if the listview is empty when using go button,
+         * the page will not be decrement by one.
+         */
         Response.Listener<String> secondListener = response -> {
             try {
                 JSONArray object = new JSONArray(response);
@@ -177,16 +219,23 @@ public class ProductFragment extends Fragment {
             }
         };
 
+        /**
+         * if the next button is clicked,
+         * the page will be increment by one.
+         */
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 page++;
                 RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
                 requestQueue.add(RequestFactory.getPage("product", page, pageSize, listener, null));
-
             }
         });
 
+        /**
+         * if the prev button is clicked,
+         * the page will be decrement by one.
+         */
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,6 +247,11 @@ public class ProductFragment extends Fragment {
             }
         });
 
+        /**
+         * if the go button is clicked,
+         * the page will go to the page
+         * of user input.
+         */
         goBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

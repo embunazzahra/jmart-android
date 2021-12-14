@@ -30,6 +30,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is activity for the store to make product.
+ * This activity will be hide from the user
+ * if they have no store yet.
+ *
+ * @author Dhau' Embun Azzahra
+ * */
 public class CreateProductActivity extends AppCompatActivity  {
     EditText productName, productWeight, productPrice, productDiscount;
     RadioGroup radioGroup;
@@ -54,14 +61,25 @@ public class CreateProductActivity extends AppCompatActivity  {
         productCategory = findViewById(R.id.spinner1);
         productShipment = findViewById(R.id.spinner2);
 
+        /**
+         * Array adapter for product category.
+         */
         ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter
                 .createFromResource(this, R.array.product_category, android.R.layout.simple_spinner_item);
+        /**
+         * Array adapter for shipment plan.
+         */
         ArrayAdapter<CharSequence> shipmentAdapter = ArrayAdapter
                 .createFromResource(this, R.array.shipment_plan, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         productCategory.setAdapter(categoryAdapter);
         productShipment.setAdapter(shipmentAdapter);
+
+        /**
+         * Converting the selected product category string in the spinner
+         * to Product Category type.
+         */
         productCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -73,6 +91,11 @@ public class CreateProductActivity extends AppCompatActivity  {
 
             }
         });
+
+        /**
+         * Assigning the shipment plan with byte
+         * according to the shipment plan selected.
+         */
         productShipment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -94,6 +117,11 @@ public class CreateProductActivity extends AppCompatActivity  {
         });
 
 
+        /**
+         * If the createButton is triggered,
+         * it will make a create product request
+         * with the all the information of the product.
+         */
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

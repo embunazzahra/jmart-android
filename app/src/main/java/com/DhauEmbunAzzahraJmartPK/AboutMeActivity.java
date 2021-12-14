@@ -25,6 +25,12 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+/**
+ * This is activity for giving information of
+ * the user in the application
+ *
+ * @author Dhau' Embun Azzahra
+ * */
 public class AboutMeActivity extends AppCompatActivity {
     TextView name;
     TextView email;
@@ -37,7 +43,13 @@ public class AboutMeActivity extends AppCompatActivity {
     TextView storeName, storeAddress, storeNumber;
     EditText topUpBalance;
     private static final Gson gson = new Gson();
+    /**
+     * Product list of the store.
+     */
     public static ArrayList<Product> productList = new ArrayList<>();
+    /**
+     * product id list of the store.
+     */
     public static ArrayList<Integer> productIdList = new ArrayList<>();
 
     @Override
@@ -63,18 +75,25 @@ public class AboutMeActivity extends AppCompatActivity {
         accHist = findViewById(R.id.accHistory);
         storeHist = findViewById(R.id.storeHistory);
 
+        /**
+         * Move to account order history page
+         * in AccountHistoryActivity.class
+         */
         accHist.setOnClickListener(e->{
             startActivity(new Intent(AboutMeActivity.this, AccountHistoryActivity.class));
         });
 
+        /**
+         * Move to store order history page
+         * in StoreHistoryActivity.class
+         */
         storeHist.setOnClickListener(e->{
-            //fetching data of all product in this store
             Response.Listener<String> respListProduct = response ->{
                 try {
                     JSONArray array = new JSONArray(response);
                     productList = gson.fromJson(array.toString(), new TypeToken<ArrayList<Product>>() {
                     }.getType());
-                    //fetching data of all payment of the product
+                    //fetching data of all product id of the product list
                     if(!productList.isEmpty()){
                         for (int i=0;i<productList.size();i++){
                             productIdList.add(productList.get(i).id);
@@ -92,6 +111,7 @@ public class AboutMeActivity extends AppCompatActivity {
                 Toast.makeText(AboutMeActivity.this, "System error.",Toast.LENGTH_SHORT).show();
             };
             RequestQueue queue = Volley.newRequestQueue(AboutMeActivity.this);
+            //fetching data of all product in this store
             queue.add(RequestFactory.getProductByStore(
                     account.id,
                     0,
@@ -101,6 +121,9 @@ public class AboutMeActivity extends AppCompatActivity {
             ));
         });
 
+        /**
+         * Top up balance of account.
+         */
         btnTopUp.setOnClickListener(e->{
             double balance_ = 0.0;
             try {
@@ -131,8 +154,13 @@ public class AboutMeActivity extends AppCompatActivity {
         email.setText(account.email);
         balance.setText(account.toString());
 
+        /**
+         * Move to store registration page
+         * in StoreRegistActivity.class
+         */
         btnStoreReg.setOnClickListener(e->{startActivity(new Intent(this, StoreRegistActivity.class));});
 
+        //set the visibility of store feature if the store is already registered or not.
         if(account.store!=null){
             tvCheckStore.setVisibility(View.GONE);
             btnStoreReg.setVisibility(View.GONE);

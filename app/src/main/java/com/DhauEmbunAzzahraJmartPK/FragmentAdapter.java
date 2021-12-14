@@ -9,6 +9,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.DhauEmbunAzzahraJmartPK.FilterFragment;
 import com.DhauEmbunAzzahraJmartPK.ProductFragment;
 
+/**
+ * This is class for fragment adapter.
+ *
+ * @author Dhau' Embun Azzahra
+ * */
 public class FragmentAdapter extends FragmentStateAdapter {
 
     public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {

@@ -34,6 +34,12 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+/**
+ * This is class for main activity.
+ * this activity consists of fragments:
+ * Product fragment to show all the product,
+ * Filter fragment to filter product.
+ */
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 pager2;
@@ -44,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Account account = LoginActivity.getLoggedAccount();
-
 
         tabLayout = findViewById(R.id.tab_layout);
         pager2 = findViewById(R.id.view_pager2);

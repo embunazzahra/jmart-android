@@ -24,6 +24,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is class for product detail activity.
+ */
 public class ProductDetailActivity extends AppCompatActivity {
     private TextView name,price,discount,condition,category,weight,shipment,store;
     Button buyButton;
@@ -45,6 +48,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         store = findViewById(R.id.productStoreDetail);
         buyButton = findViewById(R.id.prodBuy);
 
+        /**
+         * if the buy button is clicked,
+         * it will move to checkout activity in CheckoutActivity.class
+         */
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +78,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             default: shipment.setText("shipment unknown");break;
         }
 
+        /**
+         * listener for converting response and
+         * get the product store to be informed in this page.
+         */
         Response.Listener<String> respList = response -> {
             try{
                 JSONObject object = new JSONObject(response);

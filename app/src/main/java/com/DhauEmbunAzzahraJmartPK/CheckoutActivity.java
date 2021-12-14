@@ -19,6 +19,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is activity for giving information of
+ * the product selected and can make a payment request
+ * to buy the product.
+ *
+ * @author Dhau' Embun Azzahra
+ * */
 public class CheckoutActivity extends AppCompatActivity {
     TextView category, name, discPrice, count, quantity, originalPrice,
     shipCost, discount, total;
@@ -29,6 +36,11 @@ public class CheckoutActivity extends AppCompatActivity {
     private double discountedPrice = product.price*(100.0-product.discount)/100.0;
     Account account = LoginActivity.getLoggedAccount();
 
+    /**
+     * product counter feature.
+     * this will increment and decrement product counter
+     * and also dunamically change the price after that.
+     */
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -83,6 +95,9 @@ public class CheckoutActivity extends AppCompatActivity {
         discount.setText(String.valueOf(product.discount)+"%");
         total.setText(String.valueOf(10000.0+discountedPrice*prodCount));
 
+        /**
+         * This will make a payment request.
+         */
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

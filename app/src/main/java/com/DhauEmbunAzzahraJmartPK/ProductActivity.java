@@ -45,6 +45,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This is class for showing product after the filter applied.
+ */
 public class ProductActivity extends AppCompatActivity {
 
     private static final Gson gson = new Gson();
@@ -65,6 +68,11 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
         listProd = findViewById(R.id.listview);
 
+        /**
+         * If the listview is clicked,
+         * it will move to product detail activity
+         * in ProductDetailActivity.class
+         */
         listProd.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
@@ -77,6 +85,11 @@ public class ProductActivity extends AppCompatActivity {
 
         final int pageSize = 10;
         int page = 0;
+
+        /**
+         * Listener to convert the response to the Product array list
+         * using gson and set the listview.
+         */
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

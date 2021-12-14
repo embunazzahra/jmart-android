@@ -24,6 +24,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * This is class for user register activity.
+ *
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     @Override
@@ -35,6 +39,10 @@ public class RegisterActivity extends AppCompatActivity {
         EditText etEmail = findViewById(R.id.editTextTextEmailAddress);
         Button registerBtn = findViewById(R.id.button);
 
+        /**
+         * This will process the register form
+         * and move to login activity.
+         */
         registerBtn.setOnClickListener(o->{
             String name = etName.getText().toString();
             String email = etEmail.getText().toString();
