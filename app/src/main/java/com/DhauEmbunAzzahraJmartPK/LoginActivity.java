@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.DhauEmbunAzzahraJmartPK.model.Account;
 import com.DhauEmbunAzzahraJmartPK.request.LoginRequest;
+import com.DhauEmbunAzzahraJmartPK.request.RequestFactory;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,15 +42,27 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //checking session manager
         SessionManager sessionManager = new SessionManager(LoginActivity.this);
         int accountId = sessionManager.getSession();
 
         //the account id is initialized by -1 (nobody is logged in)
         if(accountId!=-1){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            Response.Listener<String> listener = response -> {
+                try{
+                    JSONObject object = new JSONObject(response);
+                    if(object!=null) {
+                        loggedAccount = gson.fromJson(object.toString(),Account.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }catch (JSONException e){
+                    Toast.makeText(LoginActivity.this, "login is failed.",Toast.LENGTH_SHORT).show();
+                }
+            };
+
+            RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+            queue.add(RequestFactory.getById("account",accountId,listener,null));
         }
     }
 
@@ -61,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText etEmail = findViewById(R.id.editTextTextEmailAddress2);
         Button loginBtn = findViewById(R.id.button2);
         Button regBtn = findViewById(R.id.button3);
+
 
 
         /**
