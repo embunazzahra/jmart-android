@@ -27,7 +27,9 @@ import java.util.ArrayList;
 
 /**
  * This is activity for giving information of
- * the user in the application
+ * the user in the application.
+ * This activity also gives some features like
+ * top up balance. phone top up, store register, and log out
  *
  * @author Dhau' Embun Azzahra
  * */
@@ -35,13 +37,15 @@ public class AboutMeActivity extends AppCompatActivity {
     TextView name;
     TextView email;
     TextView balance;
-    Button btnTopUp;
+    Button btnTopUp, btnPhoneTopUp;
     Button btnStoreReg;
     Button accHist, storeHist;
+    Button logOutBtn;
     TextView tvCheckStore;
     TextView tvStore, tvSname, tvSaddress, tvSnumber;
     TextView storeName, storeAddress, storeNumber;
     EditText topUpBalance;
+    SessionManager sessionManager;
     private static final Gson gson = new Gson();
     /**
      * Product list of the store.
@@ -57,6 +61,7 @@ public class AboutMeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
         Account account = LoginActivity.getLoggedAccount();
+        sessionManager= new SessionManager(AboutMeActivity.this);
 
         name = findViewById(R.id.txName);
         email = findViewById(R.id.txEmail);
@@ -74,6 +79,8 @@ public class AboutMeActivity extends AppCompatActivity {
         topUpBalance = findViewById(R.id.etTopUp);
         accHist = findViewById(R.id.accHistory);
         storeHist = findViewById(R.id.storeHistory);
+        btnPhoneTopUp = findViewById(R.id.phonetopup);
+        logOutBtn = findViewById(R.id.logOut);
 
         /**
          * Move to account order history page
@@ -115,7 +122,7 @@ public class AboutMeActivity extends AppCompatActivity {
             queue.add(RequestFactory.getProductByStore(
                     account.id,
                     0,
-                    50,
+                    100,
                     respListProduct,
                     errorListener
             ));
@@ -178,5 +185,17 @@ public class AboutMeActivity extends AppCompatActivity {
             storeHist.setVisibility(View.GONE);
         }
 
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //remove session and back to login session
+                SessionManager sessionManager = new SessionManager(AboutMeActivity.this);
+                sessionManager.removeSession();
+
+                Intent intent = new Intent(AboutMeActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
     }
 }

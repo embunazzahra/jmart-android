@@ -39,6 +39,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        //checking session manager
+        SessionManager sessionManager = new SessionManager(LoginActivity.this);
+        int accountId = sessionManager.getSession();
+
+        //the account id is initialized by -1 (nobody is logged in)
+        if(accountId!=-1){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -46,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText etEmail = findViewById(R.id.editTextTextEmailAddress2);
         Button loginBtn = findViewById(R.id.button2);
         Button regBtn = findViewById(R.id.button3);
+
 
         /**
          * This will move from the login page
@@ -67,6 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                                              String email = etEmail.getText().toString();
                                              String pass = etPassword.getText().toString();
 
+
+
                                              LoginRequest loginRequest = new LoginRequest(email,
                                                      pass,
                                                      new Response.Listener<String>() {
@@ -77,7 +95,10 @@ public class LoginActivity extends AppCompatActivity {
                                                                  if(object!=null) {
                                                                      Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();
                                                                      loggedAccount = gson.fromJson(object.toString(),Account.class);
+                                                                     SessionManager sessionManager = new SessionManager(LoginActivity.this);
+                                                                     sessionManager.saveSession(loggedAccount);
                                                                      Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                      startActivity(intent);
                                                                  }
                                                              }catch (JSONException e){
