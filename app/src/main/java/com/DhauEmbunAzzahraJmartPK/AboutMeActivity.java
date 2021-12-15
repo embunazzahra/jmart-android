@@ -197,5 +197,14 @@ public class AboutMeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnPhoneTopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //move to PhoneTopUpActivity
+                Intent intent = new Intent(AboutMeActivity.this,PhoneTopUpActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
