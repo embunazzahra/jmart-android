@@ -134,13 +134,13 @@ public class ProductActivity extends AppCompatActivity {
             } else if (volleyError instanceof AuthFailureError) {
                 Toast.makeText(getApplicationContext(), "Authentication/ Auth Error!", Toast.LENGTH_SHORT).show();
             } else if (volleyError instanceof ServerError) {
-                Toast.makeText(getApplicationContext(), "Server Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "No data in this page.", Toast.LENGTH_SHORT).show();
             } else if (volleyError instanceof NetworkError) {
                 Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
             } else if (volleyError instanceof ParseError) {
                 Toast.makeText(getApplicationContext(), "Parse Error!", Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(getApplicationContext(), "System error.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "No data in this page.",Toast.LENGTH_SHORT).show();
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(ProductActivity.this);

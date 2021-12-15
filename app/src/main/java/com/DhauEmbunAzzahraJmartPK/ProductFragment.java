@@ -213,10 +213,11 @@ public class ProductFragment extends Fragment {
                     );
                     if(!productsList.isEmpty())
                         listProd.setAdapter(listViewAdapter);
-                    else
+                    else{
                         Toast.makeText(getActivity(), "No data in this page.",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(),MainActivity.class);
                         startActivity(intent);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
