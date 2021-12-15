@@ -81,10 +81,11 @@ public class StoreHistoryActivity extends AppCompatActivity {
                 }.getType());
                 if(paymentList.size()>0){
                     for (int i=paymentList.size()-1;i>=0;i--){
-                        status += "\n\nPayment Id: "+String.valueOf(paymentList.get(i).id)+"\nProduct Id: "+String.valueOf(paymentList.get(i).productId)+"\nBuyer Id: "+String.valueOf(paymentList.get(i).buyerId)+"\nShipment Address: "+paymentList.get(i).shipment.address+"\nStatus:";
+                        status += "\n\nPayment Id: "+String.valueOf(paymentList.get(i).id)+"\nProduct Id: "+String.valueOf(paymentList.get(i).productId)+"\nProduct count: "+String.valueOf(paymentList.get(i).productCount)+"\nBuyer Id: "+String.valueOf(paymentList.get(i).buyerId)+"\nShipment Address: "+paymentList.get(i).shipment.address+"\nShipment plan: "+shipmentPlanCheck(paymentList.get(i).shipment.plan)+"\nShipment cost: 10.000"+"\nStatus:";
                         for(int j = 0; j < paymentList.get(i).history.size();j++){
-                            status+="\n"+paymentList.get(i).history.get(j).status.toString();
+                            status+="\n"+paymentList.get(i).history.get(j).status.toString()+"\nDate: "+paymentList.get(i).history.get(j).date.toString();
                         }
+                        status+="\n________________________________________";
                     }
                 }
                 mainContent.setText(status);
@@ -235,5 +236,16 @@ public class StoreHistoryActivity extends AppCompatActivity {
             requestQueue.add(PaymentRequest.acceptPayment(id, listener, errListener));
         });
 
+    }
+
+    public static String shipmentPlanCheck(byte plan){
+        switch (plan){
+            case (byte)(1<<0): return "INSTANT";
+            case (byte)(1<<1): return "SAME DAY";
+            case (byte)(1<<2): return "NEXT DAY";
+            case (byte) (1<<3): return "REGULER";
+            case (byte) (1<<4): return "KARGO";
+            default: return "unknown";
+        }
     }
 }

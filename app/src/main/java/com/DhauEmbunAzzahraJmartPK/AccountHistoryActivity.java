@@ -93,10 +93,11 @@ public class AccountHistoryActivity extends AppCompatActivity {
                 }.getType());
                 if(paymentList.size()>0){
                     for (int i=paymentList.size()-1;i>=0;i--){
-                        status += "\n\nPayment Id: "+String.valueOf(paymentList.get(i).id)+"\nProduct Id: "+String.valueOf(paymentList.get(i).productId)+"\nStatus:";
+                        status += "\n\nPayment Id: "+String.valueOf(paymentList.get(i).id)+"\nProduct Id: "+String.valueOf(paymentList.get(i).productId)+"\nProduct count: "+String.valueOf(paymentList.get(i).productCount)+"\nShipment Address: "+paymentList.get(i).shipment.address+"\nShipment plan: "+StoreHistoryActivity.shipmentPlanCheck(paymentList.get(i).shipment.plan)+"\nShipment cost: 10.000"+"\nStatus:";
                         for(int j = 0; j < paymentList.get(i).history.size();j++){
-                            status+="\n"+paymentList.get(i).history.get(j).status.toString();
+                            status+="\n"+paymentList.get(i).history.get(j).status.toString()+"\nDate: "+paymentList.get(i).history.get(j).date.toString();
                         }
+                        status+="\n_____________________________________";
                     }
                 }else{
                     status = "You have no order history.";
